@@ -6,7 +6,6 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import tile.Tile;
 
 public class UtilityTool {
     public BufferedImage setup(String imagePath,int width, int height){
@@ -21,18 +20,6 @@ public class UtilityTool {
 
         return image;
 
-    }
-
-    public void setup(Tile tile, String imageName, int width, int height, boolean collision){
-        try{
-            tile = new Tile();
-            tile.image = ImageIO.read(getClass().getResourceAsStream("/res/tile/" + imageName + ".png"));
-            tile.image = scaleImage(tile.image, width, height);
-            tile.collision = collision;
-        }
-        catch(IOException e){
-            e.printStackTrace();
-        } 
     }
 
     public BufferedImage scaleImage(BufferedImage original, int width, int height){

@@ -5,7 +5,6 @@ import java.awt.image.BufferedImage;
 
 import main.GamePanel;
 import main.KeyHandler;
-import main.UtilityTool;
 
 public class Player extends Entity {
 
@@ -14,7 +13,6 @@ public class Player extends Entity {
     private int worldX, worldY;
     private final int screenX;
     private final int screenY;
-    private UtilityTool utilityTool = new UtilityTool();
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
         super(gamePanel);  
@@ -24,6 +22,13 @@ public class Player extends Entity {
 
         screenX = gamePanel.screenWidth / 2 - (gamePanel.tileSize / 2);
         screenY = gamePanel.screenHeight / 2 - (gamePanel.tileSize / 2);
+
+        solidArea.x = 8;
+        solidArea.y = 16;
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
+        solidArea.width = 32;
+        solidArea.height = 32;
 
         setDefaultValues();
         getImage();
@@ -71,21 +76,34 @@ public class Player extends Entity {
         if(keyHandler.upPressed == true || keyHandler.downPressed == true || keyHandler.leftPressed == true || keyHandler.rightPressed == true || keyHandler.enterPressed == true){
             if(keyHandler.upPressed == true){
                 direction = "up";
-                worldY -= speed;
-
             }
             else if(keyHandler.downPressed == true){
                 direction = "down";
-                worldY += speed;
             }
             else if(keyHandler.leftPressed == true){
                 direction = "left";
-                worldX -= speed;
             }
             else if(keyHandler.rightPressed == true){
                 direction = "right";
-                worldX += speed;
             }
+
+            collisionOn = false;
+
+            //CHECK TILE COLLISION
+            checkTile();
+
+            
+            //IF COLLISION IS FALSE, PLAYER CAN MOVE
+            if(this.collisionOn == false){
+                switch (direction) {
+                case "up": worldY -= speed; break;
+                case "down": worldY += speed; break;
+                case "left": worldX -= speed; break;
+                case "right": worldX += speed; break;
+                }
+            }
+
+
 
             spriteCounter ++;
             if(spriteCounter > 12){
@@ -100,6 +118,8 @@ public class Player extends Entity {
 
         }
     }
+
+
 
     @Override
     public void draw(Graphics2D graphics2D) {
@@ -129,6 +149,56 @@ public class Player extends Entity {
 
         graphics2D.drawImage(image, tempScreenX, tempScreenY, null);
 
+    }
+
+
+    public void checkTile(){
+        int leftWorldX = worldX + solidArea.x;
+        int rightWorldX = worldX + solidArea.x + solidArea.width;
+        int topWorldY = worldY + solidArea.y;
+        int bottomWorldY = worldY + solidArea.y + solidArea.height;
+
+        int leftCol = leftWorldX / gamePanel.tileSize;
+        int rightCol = rightWorldX / gamePanel.tileSize;
+        int topRow = topWorldY / gamePanel.tileSize;
+        int bottomRow = bottomWorldY / gamePanel.tileSize;
+
+        int tileNum1 , tileNum2;
+
+        switch (this.direction) {
+            case "up":
+                topRow = (topWorldY - speed) / gamePanel.tileSize;
+                tileNum1 = gamePanel.getTileManager().mapTileNum[leftCol][topRow];
+                tileNum2 = gamePanel.getTileManager().mapTileNum[rightCol][topRow];
+                if(gamePanel.getTileManager().tile[tileNum1].collision == true || gamePanel.getTileManager().tile[tileNum2].collision == true ){
+                    this.collisionOn = true;
+                }
+                break;
+            case "down":
+                bottomRow = (bottomWorldY + speed) / gamePanel.tileSize;
+                tileNum1 = gamePanel.getTileManager().mapTileNum[leftCol][bottomRow];
+                tileNum2 = gamePanel.getTileManager().mapTileNum[rightCol][bottomRow];
+                if(gamePanel.getTileManager().tile[tileNum1].collision == true || gamePanel.getTileManager().tile[tileNum2].collision == true ){
+                    this.collisionOn = true;
+                }
+                break;
+            case "left":
+                leftCol = (leftWorldX - speed) / gamePanel.tileSize;
+                tileNum1 = gamePanel.getTileManager().mapTileNum[leftCol][topRow];
+                tileNum2 = gamePanel.getTileManager().mapTileNum[leftCol][bottomRow];
+                if(gamePanel.getTileManager().tile[tileNum1].collision == true || gamePanel.getTileManager().tile[tileNum2].collision == true ){
+                    this.collisionOn = true;
+                }
+                break;
+            case "right":
+                rightCol = (rightWorldX + speed) / gamePanel.tileSize;
+                tileNum1 = gamePanel.getTileManager().mapTileNum[rightCol][topRow];
+                tileNum2 = gamePanel.getTileManager().mapTileNum[rightCol][bottomRow];
+                if(gamePanel.getTileManager().tile[tileNum1].collision == true || gamePanel.getTileManager().tile[tileNum2].collision == true ){
+                    this.collisionOn = true;
+                }
+                break;
+        }
     }
 
 }

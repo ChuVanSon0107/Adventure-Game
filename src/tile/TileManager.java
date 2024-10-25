@@ -147,7 +147,6 @@ public class TileManager {
             if(worldCol == gamePanel.maxWorldCol){
                 worldCol = 0;
                 worldRow ++;
-
             }
         }
 

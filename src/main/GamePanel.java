@@ -50,6 +50,9 @@ public class GamePanel extends JPanel implements Runnable {
     public Player getPlayer(){
         return player;
     }
+    public TileManager getTileManager(){
+        return tileManager;
+    }
 
     public void setupGame(){
 
@@ -111,7 +114,7 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
 
         Graphics2D graphics2D = (Graphics2D)g;
-        
+
         //DRAW TILE
         tileManager.draw(graphics2D);
 
