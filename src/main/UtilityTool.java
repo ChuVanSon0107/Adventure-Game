@@ -23,9 +23,9 @@ public class UtilityTool {
 
     }
 
-    public Tile setup(String imageName, int width, int height, boolean collision){
-        Tile tile = new Tile();
+    public void setup(Tile tile, String imageName, int width, int height, boolean collision){
         try{
+            tile = new Tile();
             tile.image = ImageIO.read(getClass().getResourceAsStream("/res/tile/" + imageName + ".png"));
             tile.image = scaleImage(tile.image, width, height);
             tile.collision = collision;
@@ -33,7 +33,6 @@ public class UtilityTool {
         catch(IOException e){
             e.printStackTrace();
         } 
-        return tile;
     }
 
     public BufferedImage scaleImage(BufferedImage original, int width, int height){

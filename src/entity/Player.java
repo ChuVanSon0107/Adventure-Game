@@ -51,6 +51,19 @@ public class Player extends Entity {
         
     }
 
+    public int getScreenX(){
+        return screenX;
+    }
+    public int getScreenY(){
+        return screenY;
+    }
+    public int getWorldX(){
+        return worldX;
+    }
+    public int getWorldY(){
+        return worldY;
+    }
+
 
 
     @Override
@@ -58,20 +71,20 @@ public class Player extends Entity {
         if(keyHandler.upPressed == true || keyHandler.downPressed == true || keyHandler.leftPressed == true || keyHandler.rightPressed == true || keyHandler.enterPressed == true){
             if(keyHandler.upPressed == true){
                 direction = "up";
-                worldX -= speed;
+                worldY -= speed;
 
             }
             else if(keyHandler.downPressed == true){
                 direction = "down";
-                worldX += speed;
+                worldY += speed;
             }
             else if(keyHandler.leftPressed == true){
                 direction = "left";
-                worldY -= speed;
+                worldX -= speed;
             }
             else if(keyHandler.rightPressed == true){
                 direction = "right";
-                worldY += speed;
+                worldX += speed;
             }
 
             spriteCounter ++;

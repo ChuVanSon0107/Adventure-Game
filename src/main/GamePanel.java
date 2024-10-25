@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import javax.swing.JPanel;
 
 import entity.Player;
+import tile.TileManager;
 
 public class GamePanel extends JPanel implements Runnable {
     //SCREEN SETTING
@@ -28,6 +29,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     //SYSTEM
     private KeyHandler keyHandler = new KeyHandler(this);
+    private TileManager tileManager = new TileManager(this);
     private Thread gameThread;
 
     //OBJECT, MONSTER, ENTITY
@@ -43,6 +45,10 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.addKeyListener(keyHandler);
         this.setFocusable(true);
+    }
+
+    public Player getPlayer(){
+        return player;
     }
 
     public void setupGame(){
@@ -105,7 +111,11 @@ public class GamePanel extends JPanel implements Runnable {
         super.paintComponent(g);
 
         Graphics2D graphics2D = (Graphics2D)g;
+        
+        //DRAW TILE
+        tileManager.draw(graphics2D);
 
+        //DRAW PLAYER
         player.draw(graphics2D);
 
         graphics2D.dispose();
