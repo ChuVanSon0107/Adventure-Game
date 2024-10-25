@@ -10,7 +10,6 @@ public class Player extends Entity {
 
     private GamePanel gamePanel;
     private KeyHandler keyHandler;
-    private int worldX, worldY;
     private final int screenX;
     private final int screenY;
 
@@ -45,14 +44,14 @@ public class Player extends Entity {
 
     public void getImage(){
 
-        up1 = utilityTool.setup("/res/boy_walk/boy_up_1", gamePanel.tileSize, gamePanel.tileSize);
-        up2 = utilityTool.setup("/res/boy_walk/boy_up_2", gamePanel.tileSize, gamePanel.tileSize);
-        down1 = utilityTool.setup("/res/boy_walk/boy_down_1", gamePanel.tileSize, gamePanel.tileSize);
-        down2 = utilityTool.setup("/res/boy_walk/boy_down_2", gamePanel.tileSize, gamePanel.tileSize);
-        left1 = utilityTool.setup("/res/boy_walk/boy_left_1", gamePanel.tileSize, gamePanel.tileSize);
-        left2 = utilityTool.setup("/res/boy_walk/boy_left_2", gamePanel.tileSize, gamePanel.tileSize);
-        right1 = utilityTool.setup("/res/boy_walk/boy_right_1", gamePanel.tileSize, gamePanel.tileSize);
-        right2 = utilityTool.setup("/res/boy_walk/boy_right_2", gamePanel.tileSize, gamePanel.tileSize);
+        up1 = utilityTool.setup("/res/boy_walk/walk_up_1", gamePanel.tileSize, gamePanel.tileSize);
+        up2 = utilityTool.setup("/res/boy_walk/walk_up_2", gamePanel.tileSize, gamePanel.tileSize);
+        down1 = utilityTool.setup("/res/boy_walk/walk_down_1", gamePanel.tileSize, gamePanel.tileSize);
+        down2 = utilityTool.setup("/res/boy_walk/walk_down_2", gamePanel.tileSize, gamePanel.tileSize);
+        left1 = utilityTool.setup("/res/boy_walk/walk_left_1", gamePanel.tileSize, gamePanel.tileSize);
+        left2 = utilityTool.setup("/res/boy_walk/walk_left_2", gamePanel.tileSize, gamePanel.tileSize);
+        right1 = utilityTool.setup("/res/boy_walk/walk_right_1", gamePanel.tileSize, gamePanel.tileSize);
+        right2 = utilityTool.setup("/res/boy_walk/walk_right_2", gamePanel.tileSize, gamePanel.tileSize);
         
     }
 
@@ -149,56 +148,6 @@ public class Player extends Entity {
 
         graphics2D.drawImage(image, tempScreenX, tempScreenY, null);
 
-    }
-
-
-    public void checkTile(){
-        int leftWorldX = worldX + solidArea.x;
-        int rightWorldX = worldX + solidArea.x + solidArea.width;
-        int topWorldY = worldY + solidArea.y;
-        int bottomWorldY = worldY + solidArea.y + solidArea.height;
-
-        int leftCol = leftWorldX / gamePanel.tileSize;
-        int rightCol = rightWorldX / gamePanel.tileSize;
-        int topRow = topWorldY / gamePanel.tileSize;
-        int bottomRow = bottomWorldY / gamePanel.tileSize;
-
-        int tileNum1 , tileNum2;
-
-        switch (this.direction) {
-            case "up":
-                topRow = (topWorldY - speed) / gamePanel.tileSize;
-                tileNum1 = gamePanel.getTileManager().mapTileNum[leftCol][topRow];
-                tileNum2 = gamePanel.getTileManager().mapTileNum[rightCol][topRow];
-                if(gamePanel.getTileManager().tile[tileNum1].collision == true || gamePanel.getTileManager().tile[tileNum2].collision == true ){
-                    this.collisionOn = true;
-                }
-                break;
-            case "down":
-                bottomRow = (bottomWorldY + speed) / gamePanel.tileSize;
-                tileNum1 = gamePanel.getTileManager().mapTileNum[leftCol][bottomRow];
-                tileNum2 = gamePanel.getTileManager().mapTileNum[rightCol][bottomRow];
-                if(gamePanel.getTileManager().tile[tileNum1].collision == true || gamePanel.getTileManager().tile[tileNum2].collision == true ){
-                    this.collisionOn = true;
-                }
-                break;
-            case "left":
-                leftCol = (leftWorldX - speed) / gamePanel.tileSize;
-                tileNum1 = gamePanel.getTileManager().mapTileNum[leftCol][topRow];
-                tileNum2 = gamePanel.getTileManager().mapTileNum[leftCol][bottomRow];
-                if(gamePanel.getTileManager().tile[tileNum1].collision == true || gamePanel.getTileManager().tile[tileNum2].collision == true ){
-                    this.collisionOn = true;
-                }
-                break;
-            case "right":
-                rightCol = (rightWorldX + speed) / gamePanel.tileSize;
-                tileNum1 = gamePanel.getTileManager().mapTileNum[rightCol][topRow];
-                tileNum2 = gamePanel.getTileManager().mapTileNum[rightCol][bottomRow];
-                if(gamePanel.getTileManager().tile[tileNum1].collision == true || gamePanel.getTileManager().tile[tileNum2].collision == true ){
-                    this.collisionOn = true;
-                }
-                break;
-        }
     }
 
 }
