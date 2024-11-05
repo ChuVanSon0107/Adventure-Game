@@ -13,6 +13,11 @@ public class Player extends Entity {
     private final int screenX;
     private final int screenY;
 
+    //PLAYER STATUS
+    private int speed;
+    private int life;
+    private int maxLife;
+
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
         super(gamePanel);  
         
@@ -40,18 +45,22 @@ public class Player extends Entity {
         speed = 4;
         direction = "down";
 
+        //PLAYER STATUS
+        maxLife = 6;
+        life = maxLife;
+
     }
 
     public void getImage(){
 
-        up1 = utilityTool.setup("/res/boy_walk/walk_up_1", gamePanel.tileSize, gamePanel.tileSize);
-        up2 = utilityTool.setup("/res/boy_walk/walk_up_2", gamePanel.tileSize, gamePanel.tileSize);
-        down1 = utilityTool.setup("/res/boy_walk/walk_down_1", gamePanel.tileSize, gamePanel.tileSize);
-        down2 = utilityTool.setup("/res/boy_walk/walk_down_2", gamePanel.tileSize, gamePanel.tileSize);
-        left1 = utilityTool.setup("/res/boy_walk/walk_left_1", gamePanel.tileSize, gamePanel.tileSize);
-        left2 = utilityTool.setup("/res/boy_walk/walk_left_2", gamePanel.tileSize, gamePanel.tileSize);
-        right1 = utilityTool.setup("/res/boy_walk/walk_right_1", gamePanel.tileSize, gamePanel.tileSize);
-        right2 = utilityTool.setup("/res/boy_walk/walk_right_2", gamePanel.tileSize, gamePanel.tileSize);
+        up1 = utilityTool.setup("/res/boy_walk/boy_up_1", gamePanel.tileSize, gamePanel.tileSize);
+        up2 = utilityTool.setup("/res/boy_walk/boy_up_2", gamePanel.tileSize, gamePanel.tileSize);
+        down1 = utilityTool.setup("/res/boy_walk/boy_down_1", gamePanel.tileSize, gamePanel.tileSize);
+        down2 = utilityTool.setup("/res/boy_walk/boy_down_2", gamePanel.tileSize, gamePanel.tileSize);
+        left1 = utilityTool.setup("/res/boy_walk/boy_left_1", gamePanel.tileSize, gamePanel.tileSize);
+        left2 = utilityTool.setup("/res/boy_walk/boy_left_2", gamePanel.tileSize, gamePanel.tileSize);
+        right1 = utilityTool.setup("/res/boy_walk/boy_right_1", gamePanel.tileSize, gamePanel.tileSize);
+        right2 = utilityTool.setup("/res/boy_walk/boy_right_2", gamePanel.tileSize, gamePanel.tileSize);
         
     }
 

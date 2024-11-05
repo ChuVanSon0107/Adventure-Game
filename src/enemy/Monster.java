@@ -10,7 +10,7 @@ import javax.imageio.ImageIO;
 import main.GamePanel;
 import main.UtilityTool;
 
-public abstract class Enemy {
+public abstract class Monster {
     protected GamePanel gamePanel;
     protected BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
     //BufferedImage: describes an Image with an accessible buffer of image data (we use to store our image files)
@@ -22,17 +22,36 @@ public abstract class Enemy {
     protected int worldX, worldY;
     protected String direction = "down";
     protected int spriteNum = 1;
-    protected int speed = 0;
     protected boolean collisionOn = false;
 
 
     //COUNTER
     protected int spriteCounter = 0;
 
+    //MONSTER STATUS
+    protected String name;
+    protected int speed;
+    protected int life;
+    protected int maxLife;
 
-    public Enemy(GamePanel gamePanel){
+
+    public Monster(GamePanel gamePanel){
         this.gamePanel = gamePanel;
+
+        speed = 1;
+        maxLife = 4;
+        life = maxLife;
+
+        solidArea.x = 3;
+        solidArea.y = 18;
+        solidArea.width = 42;
+        solidArea.height = 30;
+        solidAreaDefaultX = solidArea.x;
+        solidAreaDefaultY = solidArea.y;
+
     }
+
+
 
 
     protected BufferedImage setup(String imagePath,int width, int height){
@@ -101,6 +120,19 @@ public abstract class Enemy {
         
     }
 
+    public boolean checkPlayer(){
+
+    }
+
+    public void checkObject(){
+
+    }
+
+    public void checkMonster(){
+        
+    }
+
+    public abstract void getImage();
     public abstract void update();
     public abstract void draw(Graphics2D graphics2D);
     public abstract void setAction();

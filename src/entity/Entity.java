@@ -10,7 +10,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import enemy.Enemy;;
+import enemy.Monster;;
 
 public abstract class Entity {
     
@@ -31,6 +31,8 @@ public abstract class Entity {
 
     //COUNTER
     protected int spriteCounter = 0;
+
+    
 
 
     public Entity(GamePanel gamePanel){
@@ -105,10 +107,16 @@ public abstract class Entity {
         }
     }
 
-    public void checkEnemy(Enemy[] enemy){
+    public void checkEnemy(Monster[] enemy){
 
-        
 
+
+    }
+
+    public int checkObject(){
+        int i = -1;
+
+        return i;
     }
 
 }
