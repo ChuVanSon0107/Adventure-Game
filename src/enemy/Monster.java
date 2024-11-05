@@ -122,6 +122,8 @@ public abstract class Monster {
 
     public boolean checkPlayer(){
 
+        boolean check = false;
+        return false;
     }
 
     public void checkObject(){
