@@ -7,6 +7,8 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
+import enemy.MONSTER_GreenSlime;
+import enemy.Monster;
 import entity.Player;
 import tile.TileManager;
 
@@ -34,6 +36,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     //OBJECT, MONSTER, ENTITY
     private Player player = new Player(this, keyHandler);
+    private Monster monsters[] = new Monster[20];
 
     //GAME STATE
     public GameState gameState;
@@ -54,9 +57,17 @@ public class GamePanel extends JPanel implements Runnable {
         return tileManager;
     }
 
+    public Monster[] getMonsters(){
+        return this.monsters;
+    }
+
     public void setupGame(){
 
         gameState = GameState.BEGIN_STATE;
+
+        this.setMonster();
+        this.setObject();
+        this.setNPC();
 
     }
 
@@ -107,7 +118,17 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update(){
+        
+        //PLAYER
         player.update();
+
+        //MONSTERS
+        for(int i = 0; i < monsters.length; i++){
+            if(monsters[i] != null){
+                monsters[i].update();
+            }
+        }
+
     }
 
     public void paintComponent(Graphics g){
@@ -121,9 +142,36 @@ public class GamePanel extends JPanel implements Runnable {
         //DRAW PLAYER
         player.draw(graphics2D);
 
+        for(int i = 0; i < monsters.length; i++){
+            if(monsters[i] != null){
+                monsters[i].draw(graphics2D);
+            }
+        }
+
         graphics2D.dispose();
     }
 
+
     
+
+    public void setMonster(){
+
+    }
+
+    public void setObject(){
+        int i = 0;
+        this.monsters[i] = new MONSTER_GreenSlime(this);
+        this.monsters[i].setPosition(23, 36);
+        i++;
+
+        this.monsters[i] = new MONSTER_GreenSlime(this);
+        this.monsters[i].setPosition(23, 37);
+        i++;
+
+    }
+
+    public void setNPC(){
+
+    }
 
 }

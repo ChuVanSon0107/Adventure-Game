@@ -27,6 +27,7 @@ public abstract class Monster {
 
     //COUNTER
     protected int spriteCounter = 0;
+    protected int actionLockCounter = 0;//to lock the action of the monster
 
     //MONSTER STATUS
     protected String name;
@@ -52,7 +53,27 @@ public abstract class Monster {
     }
 
 
+    public Rectangle getSolidArea(){
+        return this.solidArea;
+    }
 
+    public void setDefaultSolidArea(){
+        this.solidArea.x = this.solidAreaDefaultX;
+        this.solidArea.y = this.solidAreaDefaultY;
+    }
+
+    public int getWorldX(){
+        return this.worldX;
+    }
+
+    public int getWorldY(){
+        return this.worldY;
+    }
+
+    public void setPosition(int x, int y){
+        this.worldX = x * gamePanel.tileSize;
+        this.worldY = y * gamePanel.tileSize;
+    }
 
     protected BufferedImage setup(String imagePath,int width, int height){
         BufferedImage image = null;
@@ -116,13 +137,33 @@ public abstract class Monster {
         }
     }
 
-    public void receiveDamage(){
-        
-    }
-
     public boolean checkPlayer(){
-        boolean result = true;
-        return result;
+        boolean contactPlayer = false;
+
+        //Get monster's solid area position
+        this.solidArea.x = this.worldX + this.solidArea.x;
+        this.solidArea.y = this.worldY + this.solidArea.y;
+
+        //Get the player's solid area
+        gamePanel.getPlayer().getSolidArea().x = gamePanel.getPlayer().getWorldX() + gamePanel.getPlayer().getSolidArea().x;
+        gamePanel.getPlayer().getSolidArea().y = gamePanel.getPlayer().getWorldY() + gamePanel.getPlayer().getSolidArea().y;
+
+        switch(this.direction){
+            case "up": this.solidArea.y -= this.speed; break;
+            case "down": this.solidArea.y += this.speed; break;
+            case "left": this.solidArea.x -= this.speed; break;
+            case "right": this.solidArea.x += this.speed; break;
+        }
+
+        if(this.solidArea.intersects(gamePanel.getPlayer().getSolidArea())){
+            this.collisionOn = true;
+            contactPlayer = true;
+        }
+
+        this.setDefaultSolidArea();
+        gamePanel.getPlayer().setDefaultSolidArea();
+
+        return contactPlayer;
     }
 
     public void checkObject(){
@@ -139,4 +180,9 @@ public abstract class Monster {
     public abstract void setAction();
     public abstract void attack();
     
+
+
+    public void receiveDamage(){
+        
+    }
 }

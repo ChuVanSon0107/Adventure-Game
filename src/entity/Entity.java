@@ -33,12 +33,24 @@ public abstract class Entity {
     protected int spriteCounter = 0;
 
     
-
-
     public Entity(GamePanel gamePanel){
         this.gamePanel = gamePanel;
     }
 
+    public Rectangle getSolidArea(){
+        return this.solidArea;
+    }
+
+    public void setDefaultSolidArea(){
+        this.solidArea.x = this.solidAreaDefaultX;
+        this.solidArea.y = this.solidAreaDefaultY;
+    }
+
+    public String getDirection(){
+        return this.direction;
+    }
+
+    //ABSTRACT METHOD
     public abstract void update();
     public abstract void draw(Graphics2D graphics2D);
 
@@ -107,9 +119,39 @@ public abstract class Entity {
         }
     }
 
-    public void checkEnemy(Monster[] enemy){
+    public int checkMonster(Monster[] monsters){
+
+        int index = -1;
+
+        for(int i = 0; i < monsters.length; i++){
+            if(monsters[i] != null){
+                //get entity's solid area position
+                this.solidArea.x = this.worldX + this.solidArea.x;
+                this.solidArea.y = this.worldY + this.solidArea.y;
+
+                //get the monster's solid area position
+                monsters[i].getSolidArea().x = monsters[i].getWorldX() + monsters[i].getSolidArea().x;
+                monsters[i].getSolidArea().y = monsters[i].getWorldY() + monsters[i].getSolidArea().y;
 
 
+                switch (this.direction) {
+                    case "up": this.solidArea.y -= this.speed; break;
+                    case "down": this.solidArea.y += this.speed; break;
+                    case "left": this.solidArea.x -= this.speed; break;
+                    case "right": this.solidArea.x += this.speed; break;
+                }
+
+                if(this.solidArea.intersects(monsters[i].getSolidArea())){
+                    this.collisionOn = true;
+                    index = i;
+                }
+                this.setDefaultSolidArea();
+                monsters[i].setDefaultSolidArea();
+            }
+        }
+
+
+        return index;
 
     }
 

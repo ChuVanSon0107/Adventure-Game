@@ -7,8 +7,6 @@ import main.GamePanel;
 import main.KeyHandler;
 
 public class Player extends Entity {
-
-    private GamePanel gamePanel;
     private KeyHandler keyHandler;
     private final int screenX;
     private final int screenY;
@@ -21,7 +19,6 @@ public class Player extends Entity {
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
         super(gamePanel);  
         
-        this.gamePanel = gamePanel;
         this.keyHandler = keyHandler;
 
         screenX = gamePanel.screenWidth / 2 - (gamePanel.tileSize / 2);
@@ -95,15 +92,19 @@ public class Player extends Entity {
                 direction = "right";
             }
 
-            collisionOn = false;
+            this.collisionOn = false;
 
             //CHECK TILE COLLISION
-            checkTile();
+            this.checkTile();
+
+            //CHECK MONSTER COLLISION
+            int monsterIndex = this.checkMonster(gamePanel.getMonsters());
+            this.contactMonster();
 
             
             //IF COLLISION IS FALSE, PLAYER CAN MOVE
             if(this.collisionOn == false){
-                switch (direction) {
+                switch (this.direction) {
                 case "up": worldY -= speed; break;
                 case "down": worldY += speed; break;
                 case "left": worldX -= speed; break;
@@ -112,8 +113,8 @@ public class Player extends Entity {
             }
 
 
-
             spriteCounter ++;
+            
             if(spriteCounter > 12){
                 if(spriteNum == 1){
                     spriteNum = 2;
@@ -125,6 +126,14 @@ public class Player extends Entity {
             }
 
         }
+    }
+
+    public void contactMonster(){
+
+    }
+
+    public void receiveDamage(int x){
+        this.life -= 1;
     }
 
 
