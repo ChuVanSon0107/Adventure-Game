@@ -167,7 +167,7 @@ public abstract class Monster {
     }
 
     public void checkObject(){
-
+        
     }
 
     public void checkMonster(){
@@ -180,7 +180,6 @@ public abstract class Monster {
     public abstract void setAction();
     public abstract void attack();
     
-
 
     public void receiveDamage(){
         

@@ -32,6 +32,7 @@ public class GamePanel extends JPanel implements Runnable {
     //SYSTEM
     private KeyHandler keyHandler = new KeyHandler(this);
     private TileManager tileManager = new TileManager(this);
+    private UI ui = new UI(this);
     private Thread gameThread;
 
     //OBJECT, MONSTER, ENTITY
@@ -147,6 +148,8 @@ public class GamePanel extends JPanel implements Runnable {
                 monsters[i].draw(graphics2D);
             }
         }
+
+        ui.draw(graphics2D);
 
         graphics2D.dispose();
     }

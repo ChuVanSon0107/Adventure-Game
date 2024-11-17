@@ -41,9 +41,11 @@ public class MONSTER_GreenSlime extends Monster {
         this.checkMonster();
         
         boolean contactPlayer = checkPlayer();
-
         if(contactPlayer == true){
-            gamePanel.getPlayer().receiveDamage(1);
+            if(gamePanel.getPlayer().getInvincible() == false){
+                gamePanel.getPlayer().receiveDamage(1);
+                gamePanel.getPlayer().setInvincible(true);
+            }
         }
 
         if(this.collisionOn == false){

@@ -12,9 +12,14 @@ public class Player extends Entity {
     private final int screenX;
     private final int screenY;
 
+    //PLAYER COUNTER
+    private int invincibleCounter;//time not to be attacked by monster
+
     //PLAYER STATUS
     private int life;
     private int maxLife;
+    private boolean invincible;//invincible = false => monster can attack, invincible = true => monster cant't attack
+
 
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
         super(gamePanel);  
@@ -75,6 +80,24 @@ public class Player extends Entity {
     public int getWorldY(){
         return worldY;
     }
+    public int getMaxLife(){
+        return maxLife;
+    }
+    public int getLife(){
+        return life;
+    }
+    public int getInvincibleCounter(){
+        return invincibleCounter;
+    }
+    public boolean getInvincible(){
+        return invincible;
+    }
+    public void setInvincibleCounter(int invincibleCounter){
+        this.invincibleCounter = invincibleCounter;
+    }
+    public void setInvincible(boolean invincible){
+        this.invincible = invincible;
+    }
 
 
 
@@ -101,8 +124,7 @@ public class Player extends Entity {
 
             //CHECK MONSTER COLLISION
             int monsterIndex = this.checkMonster(gamePanel.getMonsters());
-            this.contactMonster();
-
+            this.contactMonster(monsterIndex);
             
             //IF COLLISION IS FALSE, PLAYER CAN MOVE
             if(this.collisionOn == false){
@@ -126,16 +148,30 @@ public class Player extends Entity {
                 }
                 spriteCounter = 0;
             }
+        }
 
+
+        //invincible = true => monster can't attack, invincible = false => thay can attack
+        if(invincible == true){
+            invincibleCounter ++;
+            if(invincibleCounter > 60){
+                invincible = false;
+                invincibleCounter = 0;
+            }
         }
     }
 
-    public void contactMonster(){
-
+    public void contactMonster(int i){
+        if(i != -1){
+            if(invincible == false){
+                receiveDamage(1);
+                invincible = true;
+            }
+        }
     }
 
     public void receiveDamage(int x){
-        this.life -= 1;
+        this.life -= x;
     }
 
 
