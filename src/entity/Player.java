@@ -49,7 +49,7 @@ public class Player extends Entity {
         this.direction = "down";
 
         //PLAYER STATUS
-        this.maxLife = 6;
+        this.maxLife = 12;
         this.life = maxLife;
         this.collisionOn = false;
 
@@ -149,29 +149,28 @@ public class Player extends Entity {
                 spriteCounter = 0;
             }
         }
-
-
-        //invincible = true => monster can't attack, invincible = false => thay can attack
-        if(invincible == true){
-            invincibleCounter ++;
-            if(invincibleCounter > 60){
-                invincible = false;
-                invincibleCounter = 0;
-            }
-        }
+        
     }
 
     public void contactMonster(int i){
         if(i != -1){
-            if(invincible == false){
-                receiveDamage(1);
-                invincible = true;
-            }
+            receiveDamage(1);
         }
     }
 
     public void receiveDamage(int x){
-        this.life -= x;
+        //invincible = true => monster can't attack, invincible = false => thay can attack
+        if(invincible == true){
+            invincibleCounter ++;
+            if(invincibleCounter > 30){
+                invincible = false;
+                invincibleCounter = 0;
+            }
+        }
+        else{
+            this.life -= 1;
+            invincible = true;
+        }
     }
 
 
