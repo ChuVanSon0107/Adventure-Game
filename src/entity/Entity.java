@@ -18,15 +18,15 @@ public abstract class Entity {
     protected BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
     //BufferedImage: describes an Image with an accessible buffer of image data (we use to store our image files)
     protected UtilityTool utilityTool = new UtilityTool();
-    protected Rectangle solidArea = new Rectangle(0, 0, 48, 48);
+    protected Rectangle solidArea;
     protected int solidAreaDefaultX, solidAreaDefaultY;
 
     //STATE
     protected int worldX, worldY;
     protected String direction = "down";
     protected int spriteNum = 1;
-    protected int speed = 0;
-    protected boolean collisionOn = false;
+    protected int speed;
+    protected boolean collisionOn;
 
 
     //COUNTER
@@ -71,21 +71,21 @@ public abstract class Entity {
     }
 
     public void checkTile(){
-        int leftWorldX = worldX + solidArea.x;
-        int rightWorldX = worldX + solidArea.x + solidArea.width;
-        int topWorldY = worldY + solidArea.y;
-        int bottomWorldY = worldY + solidArea.y + solidArea.height;
+        int leftWorldX = this.worldX + this.solidArea.x;
+        int rightWorldX = this.worldX + this.solidArea.x + this.solidArea.width;
+        int topWorldY = this.worldY + this.solidArea.y;
+        int bottomWorldY = this.worldY + this.solidArea.y + this.solidArea.height;
 
         int leftCol = leftWorldX / gamePanel.tileSize;
         int rightCol = rightWorldX / gamePanel.tileSize;
         int topRow = topWorldY / gamePanel.tileSize;
         int bottomRow = bottomWorldY / gamePanel.tileSize;
 
-        int tileNum1 , tileNum2;
+        int tileNum1, tileNum2;
 
         switch (this.direction) {
             case "up":
-                topRow = (topWorldY - speed) / gamePanel.tileSize;
+                topRow = (topWorldY - this.speed) / gamePanel.tileSize;
                 tileNum1 = gamePanel.getTileManager().mapTileNum[leftCol][topRow];
                 tileNum2 = gamePanel.getTileManager().mapTileNum[rightCol][topRow];
                 if(gamePanel.getTileManager().tile[tileNum1].collision == true || gamePanel.getTileManager().tile[tileNum2].collision == true ){
@@ -93,7 +93,7 @@ public abstract class Entity {
                 }
                 break;
             case "down":
-                bottomRow = (bottomWorldY + speed) / gamePanel.tileSize;
+                bottomRow = (bottomWorldY + this.speed) / gamePanel.tileSize;
                 tileNum1 = gamePanel.getTileManager().mapTileNum[leftCol][bottomRow];
                 tileNum2 = gamePanel.getTileManager().mapTileNum[rightCol][bottomRow];
                 if(gamePanel.getTileManager().tile[tileNum1].collision == true || gamePanel.getTileManager().tile[tileNum2].collision == true ){
@@ -101,7 +101,7 @@ public abstract class Entity {
                 }
                 break;
             case "left":
-                leftCol = (leftWorldX - speed) / gamePanel.tileSize;
+                leftCol = (leftWorldX - this.speed) / gamePanel.tileSize;
                 tileNum1 = gamePanel.getTileManager().mapTileNum[leftCol][topRow];
                 tileNum2 = gamePanel.getTileManager().mapTileNum[leftCol][bottomRow];
                 if(gamePanel.getTileManager().tile[tileNum1].collision == true || gamePanel.getTileManager().tile[tileNum2].collision == true ){
@@ -109,7 +109,7 @@ public abstract class Entity {
                 }
                 break;
             case "right":
-                rightCol = (rightWorldX + speed) / gamePanel.tileSize;
+                rightCol = (rightWorldX + this.speed) / gamePanel.tileSize;
                 tileNum1 = gamePanel.getTileManager().mapTileNum[rightCol][topRow];
                 tileNum2 = gamePanel.getTileManager().mapTileNum[rightCol][bottomRow];
                 if(gamePanel.getTileManager().tile[tileNum1].collision == true || gamePanel.getTileManager().tile[tileNum2].collision == true ){
@@ -145,11 +145,12 @@ public abstract class Entity {
                     this.collisionOn = true;
                     index = i;
                 }
+
                 this.setDefaultSolidArea();
+                
                 monsters[i].setDefaultSolidArea();
             }
         }
-
 
         return index;
 

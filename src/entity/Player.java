@@ -1,6 +1,7 @@
 package entity;
 
 import java.awt.Graphics2D;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 
 import main.GamePanel;
@@ -12,7 +13,6 @@ public class Player extends Entity {
     private final int screenY;
 
     //PLAYER STATUS
-    private int speed;
     private int life;
     private int maxLife;
 
@@ -21,30 +21,32 @@ public class Player extends Entity {
         
         this.keyHandler = keyHandler;
 
-        screenX = gamePanel.screenWidth / 2 - (gamePanel.tileSize / 2);
-        screenY = gamePanel.screenHeight / 2 - (gamePanel.tileSize / 2);
+        this.screenX = gamePanel.screenWidth / 2 - (gamePanel.tileSize / 2);
+        this.screenY = gamePanel.screenHeight / 2 - (gamePanel.tileSize / 2);
 
-        solidArea.x = 8;
-        solidArea.y = 16;
-        solidAreaDefaultX = solidArea.x;
-        solidAreaDefaultY = solidArea.y;
-        solidArea.width = 32;
-        solidArea.height = 32;
+        this.solidArea = new Rectangle();
+        this.solidArea.x = 8;
+        this.solidArea.y = 16;
+        this.solidAreaDefaultX = solidArea.x;
+        this.solidAreaDefaultY = solidArea.y;
+        this.solidArea.width = 32;
+        this.solidArea.height = 32;
 
-        setDefaultValues();
-        getImage();
+        this.setDefaultValues();
+        this.getImage();
     }
 
     public void setDefaultValues(){
 
-        worldX = gamePanel.tileSize * 23;
-        worldY = gamePanel.tileSize * 21;
-        speed = 4;
-        direction = "down";
+        this.worldX = gamePanel.tileSize * 23;
+        this.worldY = gamePanel.tileSize * 21;
+        this.speed = 4;
+        this.direction = "down";
 
         //PLAYER STATUS
-        maxLife = 6;
-        life = maxLife;
+        this.maxLife = 6;
+        this.life = maxLife;
+        this.collisionOn = false;
 
     }
 
@@ -167,5 +169,7 @@ public class Player extends Entity {
         graphics2D.drawImage(image, tempScreenX, tempScreenY, null);
 
     }
+
+    
 
 }

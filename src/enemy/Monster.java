@@ -99,7 +99,7 @@ public abstract class Monster {
         int topRow = topWorldY / gamePanel.tileSize;
         int bottomRow = bottomWorldY / gamePanel.tileSize;
 
-        int tileNum1 , tileNum2;
+        int tileNum1, tileNum2;
 
         switch (this.direction) {
             case "up":
